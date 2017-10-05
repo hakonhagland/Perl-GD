@@ -8,7 +8,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../blib/lib","$Bin/../blib/arch","$Bin/../lib";
 use constant FONT=>"$Bin/test_data/Generic.ttf";
 use constant IMAGE_TESTS => 7;
-use Test::More tests => 13;
+use Test::More tests => 14;
 use IO::Dir;
 
 use_ok('GD',':DEFAULT',':cmp');
@@ -283,4 +283,8 @@ sub catch_libgd_error {
     my $image = eval { GD::Image->newFromPng("test_data/images/corrupt.png") };
     is($image, undef);
     ok($@, 'caught corrupt png');
+
+    # RT 123157 "Exif Tag Remover“: jpeg magic in _image_type
+    $image = GD::Image->new("test_data/images/noexif.jpeg");
+    ok($image, 'exif-stripped jpeg');
 }
