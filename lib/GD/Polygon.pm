@@ -2,6 +2,9 @@ package GD::Polygon;
 
 use strict;
 use Carp 'carp';
+use vars qw($VERSION);
+$VERSION = "0.2";
+
 use GD;
 
 # old documentation error
